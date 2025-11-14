@@ -1,0 +1,89 @@
+[
+  {
+    "ownerSlug": "acme",
+    "packageSlug": "default-assistant",
+    "versionSlug": "v1",
+    "iconUrl": "https://example.com/icons/acme-default.png",
+    "rawYaml": "name: Acme Default\ndescription: Default assistant for Acme teams\ndefaultModel: acme-gpt\nmodels:\n  - name: acme-gpt\n    provider: openai\n    model: gpt-4o-mini\n    roles:\n      - chat\n      - editing\n    requestOptions:\n      temperature: 0.2\nmcpServers:\n  - name: requirements-search\n    transport: sse\n    url: https://mcp.acme.example.com/requirements\n    env:\n      API_KEY: '{{ secret.acme.requirements_api }}'\nrules:\n  - name: security\n    prompt: |\n      所有代码修改必须包含必要的安全校验与审计日志。\n    enabled: true\n  - name: tone\n    prompt: |\n      对用户保持专业且简洁的语气。\n    enabled: true\n",
+    "configResult": {
+      "config": {
+        "name": "Acme Default",
+        "description": "Default assistant for Acme teams",
+        "defaultModel": "acme-gpt",
+        "models": [
+          {
+            "name": "acme-gpt",
+            "provider": "openai",
+            "model": "gpt-4o-mini",
+            "roles": ["chat", "editing"],
+            "requestOptions": {
+              "temperature": 0.2
+            }
+          }
+        ],
+        "mcpServers": [
+          {
+            "name": "requirements-search",
+            "transport": "sse",
+            "url": "https://mcp.acme.example.com/requirements",
+            "env": {
+              "API_KEY": "{{ secret.acme.requirements_api }}"
+            }
+          }
+        ],
+        "rules": [
+          {
+            "name": "security",
+            "prompt": "所有代码修改必须包含必要的安全校验与审计日志。",
+            "enabled": true
+          },
+          {
+            "name": "tone",
+            "prompt": "对用户保持专业且简洁的语气。",
+            "enabled": true
+          }
+        ]
+      },
+      "errors": [],
+      "configLoadInterrupted": false
+    },
+    "organizationIds": ["org-acme"],
+    "defaultForPersonalWorkspaces": false
+  },
+  {
+    "ownerSlug": "personal",
+    "packageSlug": "starter",
+    "versionSlug": "v3",
+    "iconUrl": "https://example.com/icons/personal-starter.png",
+    "rawYaml": "name: Personal Starter\ndescription: Personal workspace defaults\ndefaultModel: openai-gpt-4o-mini\nmodels:\n  - name: openai-gpt-4o-mini\n    provider: openai\n    model: gpt-4o-mini\n    roles:\n      - chat\n      - editing\n    requestOptions:\n      temperature: 0.1\nrules:\n  - name: concise\n    prompt: |\n      保持回答简洁明了，并在必要时提供代码示例。\n    enabled: true\n",
+    "configResult": {
+      "config": {
+        "name": "Personal Starter",
+        "description": "Personal workspace defaults",
+        "defaultModel": "openai-gpt-4o-mini",
+        "models": [
+          {
+            "name": "openai-gpt-4o-mini",
+            "provider": "openai",
+            "model": "gpt-4o-mini",
+            "roles": ["chat", "editing"],
+            "requestOptions": {
+              "temperature": 0.1
+            }
+          }
+        ],
+        "rules": [
+          {
+            "name": "concise",
+            "prompt": "保持回答简洁明了，并在必要时提供代码示例。",
+            "enabled": true
+          }
+        ]
+      },
+      "errors": [],
+      "configLoadInterrupted": false
+    },
+    "organizationIds": [],
+    "defaultForPersonalWorkspaces": true
+  }
+]

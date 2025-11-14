@@ -1,0 +1,37 @@
+{
+  "name": "hub-server-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "webpack-dev-server --config webpack.config.js --mode development",
+    "build": "webpack --config webpack.config.js --mode production",
+    "lint": "eslint --ext .js,.vue src"
+  },
+  "dependencies": {
+    "axios": "0.21.4",
+    "core-js": "3.8.3",
+    "element-ui": "2.13.2",
+    "vue": "2.5.17",
+    "vue-router": "3.0.1",
+    "vuex": "3.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.12.10",
+    "@babel/plugin-transform-runtime": "7.12.10",
+    "@babel/preset-env": "7.12.11",
+    "@babel/runtime": "7.12.5",
+    "babel-loader": "8.2.2",
+    "css-loader": "5.0.1",
+    "eslint": "7.16.0",
+    "eslint-plugin-vue": "7.2.0",
+    "html-webpack-plugin": "4.5.0",
+    "style-loader": "2.0.0",
+    "vue-loader": "15.9.5",
+    "vue-style-loader": "4.1.2",
+    "vue-template-compiler": "2.5.17",
+    "webpack": "4.16.5",
+    "webpack-cli": "3.1.0",
+    "webpack-dev-server": "3.1.4",
+    "babel-eslint": "10.1.0"
+  }
+}
