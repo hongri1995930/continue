@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     assistants: [],
     loading: false,
+    saving: false,
   },
   mutations: {
     setAssistants(state, payload) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     setLoading(state, flag) {
       state.loading = flag;
+    },
+    setSaving(state, flag) {
+      state.saving = flag;
     },
   },
   actions: {
@@ -29,6 +33,22 @@ export default new Vuex.Store({
         commit("setAssistants", response.data);
       } finally {
         commit("setLoading", false);
+      }
+    },
+    async saveAssistant(
+      { commit, dispatch },
+      { assistant, rawYaml, organizationId },
+    ) {
+      commit("setSaving", true);
+      try {
+        await axios.post("/ide/update-assistant", {
+          ownerSlug: assistant.ownerSlug,
+          packageSlug: assistant.packageSlug,
+          rawYaml,
+        });
+        await dispatch("loadAssistants", { organizationId });
+      } finally {
+        commit("setSaving", false);
       }
     },
   },
