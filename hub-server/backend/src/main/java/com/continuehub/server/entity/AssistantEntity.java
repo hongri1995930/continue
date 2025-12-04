@@ -1,17 +1,30 @@
-package com.continuehub.server.model;
+package com.continuehub.server.entity;
 
-import java.util.Set;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
-public class AssistantRecord {
+@TableName("assistants")
+public class AssistantEntity {
+
+    @TableId(type = IdType.AUTO)
+    private Long id;
 
     private String ownerSlug;
     private String packageSlug;
     private String versionSlug;
     private String iconUrl;
     private String rawYaml;
-    private ConfigResult<Object> configResult;
-    private Set<String> organizationIds;
+    private String organizationIds;
     private boolean defaultForPersonalWorkspaces;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getOwnerSlug() {
         return ownerSlug;
@@ -53,19 +66,11 @@ public class AssistantRecord {
         this.rawYaml = rawYaml;
     }
 
-    public ConfigResult<Object> getConfigResult() {
-        return configResult;
-    }
-
-    public void setConfigResult(ConfigResult<Object> configResult) {
-        this.configResult = configResult;
-    }
-
-    public Set<String> getOrganizationIds() {
+    public String getOrganizationIds() {
         return organizationIds;
     }
 
-    public void setOrganizationIds(Set<String> organizationIds) {
+    public void setOrganizationIds(String organizationIds) {
         this.organizationIds = organizationIds;
     }
 
@@ -75,9 +80,5 @@ public class AssistantRecord {
 
     public void setDefaultForPersonalWorkspaces(boolean defaultForPersonalWorkspaces) {
         this.defaultForPersonalWorkspaces = defaultForPersonalWorkspaces;
-    }
-
-    public String getFullSlug() {
-        return ownerSlug + "/" + packageSlug + "@" + versionSlug;
     }
 }

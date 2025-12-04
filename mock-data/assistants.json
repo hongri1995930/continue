@@ -1,0 +1,17 @@
+[
+  {
+    "ownerSlug": "org-acme",
+    "packageSlug": "my-assistant",
+    "rawYaml": "name: MyProject\nversion: 0.0.1\nschema: v1\nmodels:\n  - uses: anthropic/claude-3.5-sonnet\n    with:\n      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}\n    override:\n      defaultCompletionOptions:\n        temperature: 0.8\nrules:\n  - Give concise responses\n  - Always assume TypeScript rather than JavaScript\n",
+    "updatedAt": "2024-01-01T00:00:00.000Z",
+    "configResult": {
+      "config": {
+        "name": "示例助手",
+        "defaultModel": "anthropic/claude-3.5-sonnet",
+        "rules": [{ "name": "Concise" }],
+        "mcpServers": []
+      },
+      "errors": []
+    }
+  }
+]

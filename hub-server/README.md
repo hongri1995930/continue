@@ -4,8 +4,17 @@
 
 ## 目录结构
 
-- `backend/`：Spring Boot 应用，暴露 `/ide/list-assistants` 与 `/ide/list-assistant-full-slugs` 接口，提供 IDE 所需的助手配置。
+- `backend/`：Spring Boot 应用，暴露 IDE/控制平面兼容接口，提供助手配置、登录、策略占位等。
 - `frontend/`：Vue 单页应用，调用后端接口展示助手列表、模型、规则与 MCP 服务详情。
+
+## 后端已实现的接口（按 controller）
+
+- `AuthController`：`/auth/login`、`/auth/refresh`（简单账号+密码=123456，校验组织成员，返回 access/refresh token）。
+- `AssistantController`：`GET /ide/list-assistants`、`GET /ide/list-assistant-full-slugs`（`{ fullSlugs: [...] }`）、`POST /ide/update-assistant`。
+- `OrganizationController`：`GET /ide/list-organizations`，返回当前 token 所属 org。
+- `AgentController`：devbox stub（`/agents/devboxes`、`/agents/devboxes/{id}/tunnel`）；背景 Agent 兼容 stub（`GET /agents`、`POST /agents`、`GET /agents/{id}`、`GET /agents/{id}/state`）。
+- `ControlPlaneController`：`GET /ide/policy`、`POST /ide/sync-secrets`、`GET /ide/credits`、`GET /ide/get-models-add-on-checkout-url`，均返回占位数据以满足 IDE 调用。
+- `IndexController`：`/`、`/login`、`/index*` 转发到前端 `index.html`。
 
 ## 本地运行
 

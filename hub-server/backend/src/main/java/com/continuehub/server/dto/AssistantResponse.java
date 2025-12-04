@@ -1,21 +1,20 @@
 package com.continuehub.server.dto;
 
-import com.continuehub.server.model.AssistantConfig;
 import com.continuehub.server.model.ConfigResult;
 
 public class AssistantResponse {
 
-    private ConfigResult<AssistantConfig> configResult;
+    private ConfigResult<Object> configResult;
     private String ownerSlug;
     private String packageSlug;
     private String iconUrl;
     private String rawYaml;
 
-    public ConfigResult<AssistantConfig> getConfigResult() {
+    public ConfigResult<Object> getConfigResult() {
         return configResult;
     }
 
-    public void setConfigResult(ConfigResult<AssistantConfig> configResult) {
+    public void setConfigResult(ConfigResult<Object> configResult) {
         this.configResult = configResult;
     }
 

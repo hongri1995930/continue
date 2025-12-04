@@ -20,6 +20,7 @@ import {
 import { Logger } from "../util/Logger.js";
 
 import {
+  AuthType,
   ControlPlaneSessionInfo,
   HubSessionInfo,
   isOnPremSession,
@@ -116,13 +117,39 @@ export class ControlPlaneClient {
   }
 
   async isSignedIn(): Promise<boolean> {
-    const sessionInfo = await this.sessionInfoPromise;
-    return !!sessionInfo;
+    const accessToken = await this.getAccessToken();
+    return !!accessToken;
   }
 
   async getAccessToken(): Promise<string | undefined> {
+    // Env override (useful for on-prem)
+    if (process.env.CONTINUE_API_KEY) {
+      return process.env.CONTINUE_API_KEY;
+    }
+
+    // Token from IDE-auth session (works for both hub and on-prem
+    // as long as the session object includes an accessToken field)
     const sessionInfo = await this.sessionInfoPromise;
-    return isOnPremSession(sessionInfo) ? undefined : sessionInfo?.accessToken;
+    if (
+      sessionInfo &&
+      "accessToken" in sessionInfo &&
+      typeof (sessionInfo as any).accessToken === "string" &&
+      (sessionInfo as any).accessToken
+    ) {
+      return (sessionInfo as any).accessToken as string;
+    }
+
+    // Fallback: IDE-level user token (e.g. pasted from hub login page)
+    try {
+      const ideSettings = await this.ide.getIdeSettings();
+      if (ideSettings.userToken) {
+        return ideSettings.userToken;
+      }
+    } catch {
+      // Ignore IDE settings errors and fall through
+    }
+
+    return undefined;
   }
 
   private async request(path: string, init: RequestInit): Promise<Response> {
@@ -130,12 +157,13 @@ export class ControlPlaneClient {
     const onPremSession = isOnPremSession(sessionInfo);
     const accessToken = await this.getAccessToken();
 
-    // Bearer token not necessary for on-prem auth type
-    if (!accessToken && !onPremSession) {
+    // Allow on-prem without access token
+    const env = await getControlPlaneEnv(this.ide.getIdeSettings());
+    const onPremEnv = env.AUTH_TYPE === AuthType.OnPrem || onPremSession;
+    if (!accessToken && !onPremEnv) {
       throw new Error("No access token");
     }
 
-    const env = await getControlPlaneEnv(this.ide.getIdeSettings());
     const url = new URL(path, env.CONTROL_PLANE_URL).toString();
     const ideInfo = await this.ide.getIdeInfo();
 
@@ -143,7 +171,7 @@ export class ControlPlaneClient {
       ...init,
       headers: {
         ...init.headers,
-        Authorization: `Bearer ${accessToken}`,
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
         ...{
           "x-extension-version": ideInfo.extensionVersion,
           "x-is-prerelease": String(ideInfo.isPrerelease),

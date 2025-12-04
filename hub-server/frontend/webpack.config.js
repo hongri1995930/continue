@@ -18,10 +18,15 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     host: "0.0.0.0",
-    port: 8090,
+    port: 3100,
+    historyApiFallback: true,
     proxy: {
       "/ide": {
-        target: "http://localhost:8081",
+        target: "http://localhost:3001",
+        changeOrigin: true,
+      },
+      "/auth": {
+        target: "http://localhost:3001",
         changeOrigin: true,
       },
     },

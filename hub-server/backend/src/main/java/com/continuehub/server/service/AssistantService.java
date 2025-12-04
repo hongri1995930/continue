@@ -1,8 +1,11 @@
 package com.continuehub.server.service;
 
+import com.continuehub.server.dto.UpdateAssistantRequest;
 import com.continuehub.server.model.AssistantRecord;
 import com.continuehub.server.repository.AssistantRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,5 +24,17 @@ public class AssistantService {
 
     public List<String> listAssistantFullSlugs(String organizationId) {
         return assistantRepository.findFullSlugsByOrganizationId(organizationId);
+    }
+
+    public AssistantRecord updateAssistant(UpdateAssistantRequest request) {
+        try {
+            return assistantRepository.updateAssistant(
+                    request.getOwnerSlug(),
+                    request.getPackageSlug(),
+                    request.getRawYaml()
+            );
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 }

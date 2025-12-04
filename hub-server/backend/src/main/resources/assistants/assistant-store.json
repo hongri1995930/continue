@@ -4,7 +4,7 @@
     "packageSlug": "default-assistant",
     "versionSlug": "v1",
     "iconUrl": "https://example.com/icons/acme-default.png",
-    "rawYaml": "name: Acme Default\ndescription: Default assistant for Acme teams\ndefaultModel: acme-gpt\nmodels:\n  - name: acme-gpt\n    provider: openai\n    model: gpt-4o-mini\n    roles:\n      - chat\n      - editing\n    requestOptions:\n      temperature: 0.2\nmcpServers:\n  - name: requirements-search\n    transport: sse\n    url: https://mcp.acme.example.com/requirements\n    env:\n      API_KEY: '{{ secret.acme.requirements_api }}'\nrules:\n  - name: security\n    prompt: |\n      所有代码修改必须包含必要的安全校验与审计日志。\n    enabled: true\n  - name: tone\n    prompt: |\n      对用户保持专业且简洁的语气。\n    enabled: true\n",
+    "rawYaml": "name: Acme Default\nversion: 0.0.1\ndescription: Default assistant for Acme teams\ndefaultModel: acme-gpt\nmodels:\n  - name: acme-gpt\n    uses: openai/gpt-4o-mini\n    provider: continue-proxy\n    orgScopeId: org-acme\n    onPremProxyUrl: http://localhost:3001\n    roles:\n      - chat\n      - edit\n    env: {}\nrules:\n  - name: security\n    rule: 所有代码修改必须包含必要的安全校验与审计日志。\n  - name: tone\n    rule: 对用户保持专业且简洁的语气。\n",
     "configResult": {
       "config": {
         "name": "Acme Default",
@@ -55,7 +55,7 @@
     "packageSlug": "starter",
     "versionSlug": "v3",
     "iconUrl": "https://example.com/icons/personal-starter.png",
-    "rawYaml": "name: Personal Starter\ndescription: Personal workspace defaults\ndefaultModel: openai-gpt-4o-mini\nmodels:\n  - name: openai-gpt-4o-mini\n    provider: openai\n    model: gpt-4o-mini\n    roles:\n      - chat\n      - editing\n    requestOptions:\n      temperature: 0.1\nrules:\n  - name: concise\n    prompt: |\n      保持回答简洁明了，并在必要时提供代码示例。\n    enabled: true\n",
+    "rawYaml": "name: Personal Starter\nversion: 0.0.1\ndescription: Personal workspace defaults\ndefaultModel: openai-gpt-4o-mini\nmodels:\n  - name: openai-gpt-4o-mini\n    uses: openai/gpt-4o-mini\n    provider: continue-proxy\n    orgScopeId: personal\n    onPremProxyUrl: http://localhost:3001\n    roles:\n      - chat\n      - edit\n    env: {}\nrules:\n  - name: concise\n    rule: 保持回答简洁明了，并在必要时提供代码示例。\n",
     "configResult": {
       "config": {
         "name": "Personal Starter",

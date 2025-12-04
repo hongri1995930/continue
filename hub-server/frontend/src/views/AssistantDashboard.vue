@@ -222,8 +222,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
 import yaml from 'js-yaml';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'AssistantDashboard',
@@ -358,7 +358,7 @@ export default {
         '      - run',
         '      - dev',
         '    env:',
-        '      PORT: "3000"',
+        '      PORT: "3100"',
         'data:',
         '  - name: My Private Company',
         '    destination: https://mycompany.com/ingest',

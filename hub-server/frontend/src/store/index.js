@@ -26,9 +26,9 @@ export default new Vuex.Store({
       commit("setLoading", true);
       try {
         const params = {};
-        if (organizationId) {
-          params.organizationId = organizationId;
-        }
+        const orgFromStorage = localStorage.getItem("orgSlug");
+        if (organizationId) params.organizationId = organizationId;
+        else if (orgFromStorage) params.organizationId = orgFromStorage;
         const response = await axios.get("/ide/list-assistants", { params });
         commit("setAssistants", response.data);
       } finally {
@@ -41,10 +41,12 @@ export default new Vuex.Store({
     ) {
       commit("setSaving", true);
       try {
+        const orgFromStorage = localStorage.getItem("orgSlug");
         await axios.post("/ide/update-assistant", {
           ownerSlug: assistant.ownerSlug,
           packageSlug: assistant.packageSlug,
           rawYaml,
+          organizationId: organizationId || orgFromStorage,
         });
         await dispatch("loadAssistants", { organizationId });
       } finally {

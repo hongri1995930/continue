@@ -27,8 +27,7 @@ export function OrganizationsSection() {
   const { organizations, session } = useAuth();
   const ideMessenger = useContext(IdeMessengerContext);
 
-  const shouldRenderOrgInfo =
-    session && organizations.length > 1 && !isOnPremSession(session);
+  const shouldRenderOrgInfo = session && organizations.length > 1;
 
   function handleAddOrganization() {
     void ideMessenger.request("controlPlane/openUrl", {

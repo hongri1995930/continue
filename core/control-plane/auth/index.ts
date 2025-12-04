@@ -9,8 +9,9 @@ export async function getAuthUrlForTokenPage(
 ): Promise<string> {
   const env = await getControlPlaneEnv(ideSettingsPromise);
 
+  // On-prem / non-hub: always return the app login page (#/login)
   if (!isHubEnv(env)) {
-    throw new Error("Sign in disabled");
+    return `${env.APP_URL.replace(/\/+$/, "")}/#/login`;
   }
 
   const url = new URL("https://api.workos.com/user_management/authorize");

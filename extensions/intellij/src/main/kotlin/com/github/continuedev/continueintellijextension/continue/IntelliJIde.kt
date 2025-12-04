@@ -173,7 +173,8 @@ class IntelliJIDE(
             remoteConfigServerUrl = settings.continueState.remoteConfigServerUrl,
             remoteConfigSyncPeriod = settings.continueState.remoteConfigSyncPeriod,
             userToken = settings.continueState.userToken ?: "",
-            continueTestEnvironment = "production",
+            // Respect persisted test environment (production/test/local)
+            continueTestEnvironment = settings.continueState.continueTestEnvironment,
             pauseCodebaseIndexOnStart = false, // TODO: Needs to be implemented
         )
     }

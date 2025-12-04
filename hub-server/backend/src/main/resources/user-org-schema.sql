@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS organizations (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    org_slug VARCHAR(128) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(128) NOT NULL UNIQUE,
+    display_name VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS user_orgs (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    org_id BIGINT NOT NULL,
+    CONSTRAINT fk_user_orgs_user FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT fk_user_orgs_org FOREIGN KEY (org_id) REFERENCES organizations(id),
+    CONSTRAINT uk_user_org UNIQUE (user_id, org_id)
+);
