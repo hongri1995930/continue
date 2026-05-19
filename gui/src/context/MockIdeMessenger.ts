@@ -108,6 +108,7 @@ const DEFAULT_MOCK_CORE_RESPONSES: MockResponses = {
           subagent: null,
         },
         rules: [],
+        skills: [],
       },
       errors: [],
       configLoadInterrupted: false,

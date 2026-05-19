@@ -659,6 +659,7 @@ async function finalToBrowserConfig(
   final: ContinueConfig,
   ide: IDE,
 ): Promise<BrowserSerializedContinueConfig> {
+  console.log(`[finalToBrowserConfig] final.skills:`, final.skills?.length ?? 'undefined');
   return {
     allowAnonymousTelemetry: final.allowAnonymousTelemetry,
     completionOptions: final.completionOptions,
@@ -690,6 +691,11 @@ async function finalToBrowserConfig(
         v ? llmToSerializedModelDescription(v) : null,
       ]),
     ) as Record<ModelRole, ModelDescription | null>, // TODO better types here
+    skills: (final.skills ?? []).map(({ name, description, path }) => ({
+      name,
+      description,
+      path,
+    })),
     // data not included here because client doesn't need
   };
 }

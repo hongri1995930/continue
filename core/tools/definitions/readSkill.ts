@@ -3,7 +3,11 @@ import { loadMarkdownSkills } from "../../config/markdown/loadMarkdownSkills";
 import { BUILT_IN_GROUP_NAME, BuiltInToolNames } from "../builtIn";
 
 export const readSkillTool: GetTool = async (params) => {
-  const { skills } = await loadMarkdownSkills(params.ide);
+  const { skills, errors } = await loadMarkdownSkills(params.ide);
+  console.log(`[readSkillTool] Loaded ${skills.length} skills:`, skills.map(s => s.name));
+  if (errors.length > 0) {
+    console.log(`[readSkillTool] Errors:`, errors);
+  }
   return {
     type: "function",
     displayTitle: "Read Skill",

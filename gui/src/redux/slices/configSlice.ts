@@ -36,6 +36,7 @@ export const EMPTY_CONFIG: BrowserSerializedContinueConfig = {
     subagent: null,
   },
   rules: [],
+  skills: [],
 };
 
 export const INITIAL_CONFIG_SLICE: ConfigState = {

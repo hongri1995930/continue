@@ -42,6 +42,7 @@ import { getWorkspaceContinueRuleDotFiles } from "../getWorkspaceContinueRuleDot
 import { loadContinueConfigFromJson } from "../load";
 import { CodebaseRulesCache } from "../markdown/loadCodebaseRules";
 import { loadMarkdownRules } from "../markdown/loadMarkdownRules";
+import { loadMarkdownSkills } from "../markdown/loadMarkdownSkills";
 import { migrateJsonSharedConfig } from "../migrateSharedConfig";
 import { rectifySelectedModelsFromGlobalContext } from "../selectedModels";
 import { loadContinueConfigFromYaml } from "../yaml/loadYaml";
@@ -172,6 +173,15 @@ export default async function doLoadConfig(options: {
   const { rules, errors: rulesErrors } = await loadRules(ide);
   errors.push(...rulesErrors);
   newConfig.rules.unshift(...rules);
+
+  // Load skills from markdown files
+  const { skills, errors: skillsErrors } = await loadMarkdownSkills(ide);
+  console.log(`[doLoadConfig] Loaded ${skills.length} skills:`, skills.map(s => s.name));
+  if (skillsErrors.length > 0) {
+    console.log(`[doLoadConfig] Skills errors:`, skillsErrors);
+  }
+  errors.push(...skillsErrors);
+  newConfig.skills = skills;
 
   // Convert invokable rules to slash commands
   for (const rule of newConfig.rules) {

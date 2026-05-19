@@ -11,7 +11,7 @@ import {
   StopCircleIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import { MCPConnectionStatus, MCPServerStatus } from "core";
+import { BrowserSerializedSkill, MCPConnectionStatus, MCPServerStatus } from "core";
 import { BUILT_IN_GROUP_NAME } from "core/tools/builtIn";
 import { useContext, useMemo, useState } from "react";
 import Alert from "../../../components/gui/Alert";
@@ -32,6 +32,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { updateConfig } from "../../../redux/slices/configSlice";
 import { selectCurrentOrg } from "../../../redux/slices/profilesSlice";
 import { ConfigHeader } from "../components/ConfigHeader";
+import { SkillCard } from "../components/SkillCard";
 import { ToolPoliciesGroup } from "../components/ToolPoliciesGroup";
 
 interface MCPServerStatusProps {
@@ -407,6 +408,7 @@ function MCPServerPreview({
 
 export function ToolsSection() {
   const availableTools = useAppSelector((state) => state.config.config.tools);
+  const skills = (useAppSelector((state) => state.config.config.skills) ?? []) as BrowserSerializedSkill[];
 
   const currentOrg = useAppSelector(selectCurrentOrg);
   const mode = useAppSelector((store) => store.session.mode);
@@ -537,6 +539,19 @@ export function ToolsSection() {
               </Card>
             )}
           </>
+        )}
+        <ConfigHeader
+          title="Skills"
+          variant="sm"
+        />
+        {skills.length > 0 ? (
+          skills.map((skill) => (
+            <SkillCard key={skill.path} skill={skill} />
+          ))
+        ) : (
+          <Card>
+            <EmptyState message="暂无已加载的 Skills。将 SKILL.md 文件放入 .continue/skills/ 目录即可开始使用。" />
+          </Card>
         )}
       </div>
     </>

@@ -1845,6 +1845,13 @@ export interface ContinueConfig {
   modelsByRole: Record<ModelRole, ILLM[]>;
   selectedModelByRole: Record<ModelRole, ILLM | null>;
   data?: DataDestination[];
+  skills?: Skill[];
+}
+
+export interface BrowserSerializedSkill {
+  name: string;
+  description: string;
+  path: string;
 }
 
 export interface BrowserSerializedContinueConfig {
@@ -1863,6 +1870,7 @@ export interface BrowserSerializedContinueConfig {
   docs?: SiteIndexingConfig[];
   tools: Omit<Tool, "preprocessArgs", "evaluateToolCallPolicy">[];
   mcpServerStatuses: MCPServerStatus[];
+  skills: BrowserSerializedSkill[];
   rules: RuleWithSource[];
   usePlatform: boolean;
   tabAutocompleteOptions?: Partial<TabAutocompleteOptions>;

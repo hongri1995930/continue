@@ -76,6 +76,7 @@ describe("usesFreeTrialApiKey", () => {
       mcpServerStatuses: [],
       usePlatform: false,
       rules: [],
+      skills: [],
     };
 
     const result = usesFreeTrialApiKey(config);
@@ -126,6 +127,7 @@ describe("usesFreeTrialApiKey", () => {
       mcpServerStatuses: [],
       usePlatform: false,
       rules: [],
+      skills: [],
     };
 
     mockDecodeSecretLocation
@@ -188,6 +190,7 @@ describe("usesFreeTrialApiKey", () => {
       mcpServerStatuses: [],
       usePlatform: false,
       rules: [],
+      skills: [],
     };
 
     mockDecodeSecretLocation
@@ -251,6 +254,7 @@ describe("usesFreeTrialApiKey", () => {
       mcpServerStatuses: [],
       usePlatform: false,
       rules: [],
+      skills: [],
     };
 
     mockDecodeSecretLocation
@@ -307,6 +311,7 @@ describe("usesFreeTrialApiKey", () => {
       mcpServerStatuses: [],
       usePlatform: false,
       rules: [],
+      skills: [],
     };
 
     mockDecodeSecretLocation.mockImplementation(() => {
@@ -351,6 +356,7 @@ describe("usesFreeTrialApiKey", () => {
       mcpServerStatuses: [],
       usePlatform: false,
       rules: [],
+      skills: [],
     };
 
     const result = usesFreeTrialApiKey(config);
